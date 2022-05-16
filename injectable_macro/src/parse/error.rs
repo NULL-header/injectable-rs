@@ -4,7 +4,7 @@ use thiserror::Error;
 pub enum ParseErrorKind {
     #[error("The inject macro can not use with an empty trait.")]
     Empty,
-    #[error("The code is not a trait, or it is wrong with syntax.")]
+    #[error("The inject macro is only for a trait.")]
     NotTrait,
 }
 

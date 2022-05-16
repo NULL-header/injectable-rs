@@ -5,6 +5,9 @@ version = 3
 [[package]]
 name = "injectable-rs"
 version = "0.1.0"
+dependencies = [
+ "injectable_macro",
+]
 
 [[package]]
 name = "injectable_macro"

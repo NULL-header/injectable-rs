@@ -1,2 +1,4 @@
 mod error;
-mod parse_input;
+mod input;
+
+pub use input::Input;
