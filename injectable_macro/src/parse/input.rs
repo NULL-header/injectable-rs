@@ -2,7 +2,7 @@ use super::error::{ParseError, ParseErrorKind};
 
 #[derive(Debug)]
 pub struct Input {
-  body: syn::ItemTrait,
+  pub body: syn::ItemTrait,
 }
 
 impl Input {
