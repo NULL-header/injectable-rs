@@ -48,4 +48,12 @@ mod test {
     };
     assert.error(input, InputError::NotEnum);
   }
+
+  #[rstest]
+  fn ok(assert: Assert) {
+    let input = quote! {
+        enum Mock{}
+    };
+    assert.ok(input, |_| {});
+  }
 }
