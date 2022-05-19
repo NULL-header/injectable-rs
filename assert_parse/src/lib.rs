@@ -28,7 +28,7 @@ impl<T: Parse, U: Display> Assert<T, U> {
   ///
   /// * when it is success to parse
   /// * when there is different in error message
-  pub fn error(arg: TokenStream2, error: U) {
+  pub fn error(&self, arg: TokenStream2, error: U) {
     let arg: syn::Result<T> = syn::parse2(arg);
     match arg {
       Ok(_) => {
@@ -44,7 +44,7 @@ impl<T: Parse, U: Display> Assert<T, U> {
   ///
   /// * when it is failed to parse
   /// * when it is failed to finish to call assert
-  pub fn ok<V>(arg: TokenStream2, assert: V)
+  pub fn ok<V>(&self, arg: TokenStream2, assert: V)
   where
     V: FnOnce(T),
   {
