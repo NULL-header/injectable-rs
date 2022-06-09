@@ -12,6 +12,14 @@ enum InputError {
 // when this be made with parse, the trait must has some methods.
 pub struct Input(syn::ItemTrait);
 
+type Args = syn::punctuated::Punctuated<syn::FnArg, syn::token::Comma>;
+
+pub struct Field<'a> {
+  pub name: &'a syn::Ident,
+  pub output: &'a syn::ReturnType,
+  pub args: Args,
+}
+
 impl Input {
   pub fn new(i: syn::ItemTrait) -> Input {
     Input(i)
@@ -19,15 +27,23 @@ impl Input {
   pub fn get_name(&self) -> &syn::Ident {
     &self.0.ident
   }
-  pub fn get_fields<'a>(&'a self) -> Vec<&'a syn::Ident> {
+  pub fn get_all(&self) -> &syn::ItemTrait {
+    &self.0
+  }
+  pub fn get_fields<'a>(&'a self) -> Vec<Field<'a>> {
     let fields = self.0.items.iter();
     let fields = fields.map(|e| match e {
-      syn::TraitItem::Method(e) => Some(&e.sig.ident),
+      syn::TraitItem::Method(e) => Some(e),
       _ => None,
     });
     let fields = fields.fold(Vec::new(), |mut a, e| {
       if let Some(e) = e {
-        a.push(e);
+        let field = Field {
+          name: &e.sig.ident,
+          output: &e.sig.output,
+          args: &e.sig.inputs,
+        };
+        a.push(field);
       }
       a
     });
@@ -52,6 +68,7 @@ impl syn::parse::Parse for Input {
 
 #[cfg(test)]
 mod test {
+
   use super::*;
   use assert_parse::register_assert;
   use quote::quote;
@@ -82,9 +99,11 @@ mod test {
     };
     assert.ok(input, |input| {
       let fields = input.get_fields();
-      let fields: Vec<_> = fields.iter().map(|e| e.to_string()).collect();
-      let target = vec!["something".to_string()];
-      assert_eq!(fields, target);
+      if fields.len() > 1 {
+        panic!("fields too many on logic.");
+      }
+      let result = &fields[0];
+      assert_eq!(result.name.to_string(), "something".to_string());
     });
   }
 }
