@@ -3,6 +3,48 @@
 version = 3
 
 [[package]]
+name = "aho-corasick"
+version = "0.7.18"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "1e37cfd5e7657ada45f742d6e99ca5788580b5c529dc78faf11ece6dc702656f"
+dependencies = [
+ "memchr",
+]
+
+[[package]]
+name = "assert-parse"
+version = "1.0.2"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b4fd12ecdcdc49c45eb7734131534d4ed537e24e6b9205d5e548eca154c20939"
+dependencies = [
+ "assert-parse-core",
+ "assert-parse-register-assert-macro",
+]
+
+[[package]]
+name = "assert-parse-core"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "10827e37ac81447145ba0369a2719fa1587901bf60cf7bdc396cd2e3227bff88"
+dependencies = [
+ "proc-macro2",
+ "syn",
+]
+
+[[package]]
+name = "assert-parse-register-assert-macro"
+version = "1.0.4"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "12fdbab82dd3e1e474b016a90427101d2bfe37898f2c5bf109cf4afbef565961"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "rstest",
+ "syn",
+ "thiserror",
+]
+
+[[package]]
 name = "async-attributes"
 version = "1.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -354,12 +396,16 @@ dependencies = [
 name = "injectable_macro"
 version = "0.1.0"
 dependencies = [
+ "assert-parse",
+ "assert-parse-register-assert-macro",
  "proc-macro-error",
  "proc-macro2",
  "quote",
+ "regex",
  "rstest",
  "syn",
  "thiserror",
+ "to-syn-error",
 ]
 
 [[package]]
@@ -507,6 +553,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "regex"
+version = "1.5.6"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "d83f127d94bdbcda4c8cc2e50f6f84f4b611f69c902699ca385a39c3a75f9ff1"
+dependencies = [
+ "aho-corasick",
+ "memchr",
+ "regex-syntax",
+]
+
+[[package]]
+name = "regex-syntax"
+version = "0.6.26"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "49b3de9ec5dc0a3417da371aab17d729997c15010e7fd24ff707773a33bddb64"
+
+[[package]]
 name = "rstest"
 version = "0.13.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -592,6 +655,29 @@ dependencies = [
  "proc-macro2",
  "quote",
  "syn",
+]
+
+[[package]]
+name = "to-syn-error"
+version = "1.0.1"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "2ff5a7707f26897e40a6e1ebd1c5558a8524d62d18e46d7f2446c37fdfce854f"
+dependencies = [
+ "proc-macro2",
+ "syn",
+ "to-syn-error-derive",
+]
+
+[[package]]
+name = "to-syn-error-derive"
+version = "1.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "b5e703e075986a9e12fb5ee3cb81c6d7b342af926005753e2a9ec36c1acfe140"
+dependencies = [
+ "proc-macro2",
+ "quote",
+ "syn",
+ "thiserror",
 ]
 
 [[package]]
